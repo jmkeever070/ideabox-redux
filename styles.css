@@ -8,9 +8,13 @@
   border-style: solid;
   display: grid;
   grid-template-columns: .75fr 2fr;
-  grid-template-rows: .5fr 6fr;
+  grid-template-rows: repeat (3, 1fr);
   grid-template-areas: 
   "sidebar upper-main" 
+  "sidebar card-area"
+  "sidebar card-area"
+  "sidebar card-area"
+  "sidebar card-area"
   "sidebar card-area";
 }
 
@@ -166,10 +170,55 @@ label {
   grid-area: card-area;
   background: #EAEAF4;
   font-family: 'Open Sans', sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.idea-card {
+  width: 30%;
+  border: 2px solid black;
+  margin: 10px;
+  /*height: 37%;*/
+}
+
+
+.card-header {
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  background: #1F1E3D;
+}
+
+.card-main {
+  height: 80%;
+}
+
+.card-title {
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.card-body {
+  padding-left: 10px;
+  overflow-wrap: break-word;
+}
+
+.card-footer {
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  background: #5256A5
+}
+
+.card-quality {
+  color: #ffffff;
+  padding: 11px 0;
 }
 
 
 .btns {
-  width: 10px;
-  background: green;
+  width: 30px;
+  
 }
+
