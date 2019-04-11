@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="normalize.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <title>Ideabox Redux</title>
+  </head>
+  <body>
+    <main class="container">
+      <section class="sidebar">
+        <h3 class="title">IdeaBox Redux</h3>
+        <div class="filter-star">
+          <p>Filter Starred Ideas</p>
+          <input class="show-starred" type="submit" value="Show Starred Ideas">
+        </div>
+        <div class="quality-fil">
+          <p class="swill-btn">Swill</p>
+          <p class="plaus-btn">Plausible</p>
+          <p class="gen-btn">Genius</p>
+        </div>
+        <form>
+          <label class="form-styles" for="new-qual">New Quality</label>
+          <input class="new-qual-input" type="text" id="new-qual">
+          <input class="quality-input" type="submit" value="Add New Quality">
+        </form>
+      </section>
+      <section class="top-main">
+        <form>
+          <label class="form-styles" for="title">Title</label>
+          <input class="title-input" type="text"  id="title">
+          <label class="form-styles" for="body">Body</label>
+          <input class="body-input" type="text" id="body">
+          <i class="fas fa-search"></i>
+          <input class="search-input" type="submit" value="Save">
+        </form>
+      </section>
+      <section class="card-area">
+      <article class="idea-card">
+        <div class="card-header">
+          <input type="image" class="btns star-btn" src="assets/star.svg">
+          <input type="image" class="btns delete-btn" src="assets/delete.svg">
+        </div>
+        <div class="card-main">
+          <p class="card-title">Idea title</p>
+          <p class="card-body">Idea body</p>
+        </div>
+        <footer class="card-footer">
+          <input type="image" class="up-vote btns" src="assets/upvote.svg">
+          <h6 class="card-quality">Quality: <span class="vote">Swill</span></h6>
+          <input type="image" class="down-vote btns" src="assets/downvote.svg">
+        </footer>
+      </article>
+      </section>
+    </main>
+  </body>
+</html>
