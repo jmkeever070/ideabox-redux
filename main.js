@@ -8,6 +8,7 @@ var numCards = 0;
 var cardBookmark = document.querySelector('.card-area');
 var myEnter = document.querySelector('.editable');
 
+
 for (var i = 0; i < localStorage.length; i++) {
   var key = localStorage.key(i);
   var value = localStorage[key];
@@ -17,10 +18,25 @@ for (var i = 0; i < localStorage.length; i++) {
 
 
 
+
 // *******Event Listeners**********
 window.addEventListener('load', windowLoad(ideasArray));
 
-saveBtn.addEventListener('click', addCard);
+saveBtn.addEventListener('click', function(e) {
+  if(title.value.length === 0 || body.value.length === 0) {
+    saveBtn.disabled = true;
+    location.reload();
+  }
+  else {
+    addCard(e);
+  }
+});
+
+cardBookmark.addEventListener('click', function(e) {
+  if (e.target.className.includes('star')) {
+    activateStar(e);
+  }
+})
 
 cardBookmark.addEventListener('click', function(e) {
   if (e.target.className.includes('delete-btn')) {
@@ -53,8 +69,8 @@ function windowLoad(storageArray) {
   })
 }
 
-
 function addCard(e) {
+  // debugger;
   e.preventDefault();
   var idea = new Idea(title.value, body.value);
   ideasArray.push(idea);
@@ -72,7 +88,8 @@ function makeCard(idea) {
 
 `<article class="idea-card" id="card${idea.id}">
         <div class="card-header">
-          <input type="image" class="btns" src="assets/star.svg">
+          <input type="image" class="btns star" data-removestar=${idea.id} id="normal-star${idea.id}" src="assets/star.svg">
+          <input type="image" class="btns red-star" data-addstar=${idea.id} id="active-star${idea.id}" style="display:none" src="assets/star-active.svg">
           <input type="image" data-deleteid=${idea.id} class=" delete-btn btns" src="assets/delete.svg">
         </div>
         <div class="card-main">
@@ -103,6 +120,18 @@ function deleteCard(e) {
 };
 
 // *************Update Content Functions************
+
+function activateStar(e) {
+  var findId = e.target.dataset.removestar;
+  var star = document.querySelector(`#normal-star${findId}`)
+  var newStar = document.querySelector(`#active-star${findId}`);
+
+    if (e.target.classList.contains('star')) {
+        star.remove();
+        newStar.style.display = 'block';
+  } 
+};
+
 
 function returnKey(e) {
   if (e.keyCode === 13 && e.target.className.includes('card-title')){

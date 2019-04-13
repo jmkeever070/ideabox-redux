@@ -189,6 +189,10 @@ label {
   background: #1F1E3D;
 }
 
+#active-star {
+  display: none;
+}
+
 .card-main {
   height: 80%;
 }
