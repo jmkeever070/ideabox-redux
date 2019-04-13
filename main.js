@@ -58,6 +58,17 @@ cardBookmark.addEventListener('click', function(e) {
 
 cardBookmark.addEventListener('keydown', returnKey);
 
+cardBookmark.addEventListener('click', function(e) {
+  if (e.target.className.includes('up-vote')) {
+    voteUp(e);
+  }
+})
+
+cardBookmark.addEventListener('click', function(e) {
+  if (e.target.className.includes('down-vote')) {
+    voteDown(e);
+  }
+})
 
 
 // *******Functions****************
@@ -97,9 +108,9 @@ function makeCard(idea) {
           <p class="card-body editable" data-editcontent=${idea.id} data-editbody=${idea.body}>${idea.body}</p>
         </div>
         <footer class="card-footer">
-          <input type="image" class="up-vote btns" src="assets/upvote.svg">
-          <h6 class="card-quality">Quality: <span class="vote">${idea.quality}</span></h6>
-          <input type="image" class="down-vote btns" src="assets/downvote.svg">
+          <input type="image" class="up-vote btns" data-editquality=${idea.id} src="assets/upvote.svg">
+          <h6 class="card-quality">Quality: <span class="vote" id=newqual${idea.id}>${idea.quality}</span></h6>
+          <input type="image" class="down-vote btns" data-editquality=${idea.id} src="assets/downvote.svg">
         </footer>
       </article>`
       cardBookmark.insertAdjacentHTML('afterbegin', card);
@@ -174,3 +185,59 @@ function updateBodyContent(e) {
     newIdea.updateIdea(e.target.innerText, 'body');
   }
 };
+
+// ************UP AND DOWN VOTE FUNCTIONS************
+
+function voteUp(e) {
+  var findId = e.target.dataset.editquality;
+
+  var idea = localStorage.getItem(findId);
+  var ideaObject = JSON.parse(idea);
+  var newQuality = ideaObject.quality;
+
+    if (newQuality === 'Swill') {
+        newQuality = 'Plausible';
+        let newQual = document.querySelector(`#newqual${findId}`);
+          newQual.innerText = 'Plausible'
+    } else if (newQuality === 'Plausible') {
+        newQuality = 'Genius';
+        let newQual = document.querySelector(`#newqual${findId}`);
+          newQual.innerText = 'Genius';
+    }
+
+  var newIdea = new Idea(ideaObject.title, ideaObject.body, ideaObject.id, newQuality);
+  newIdea.updateQuality();
+}
+
+function voteDown(e) {
+  var findId = e.target.dataset.editquality;
+
+  var idea = localStorage.getItem(findId);
+  var ideaObject = JSON.parse(idea);
+  var newQuality = ideaObject.quality;
+
+    if (newQuality === 'Genius') {
+        newQuality = 'Plausible';
+        let newQual = document.querySelector(`#newqual${findId}`);
+          newQual.innerText = 'Plausible'
+    } else if (newQuality === 'Plausible') {
+        newQuality = 'Swill';
+        let newQual = document.querySelector(`#newqual${findId}`);
+          newQual.innerText = 'Swill'
+    }
+
+  var newIdea = new Idea (ideaObject.title, ideaObject.body, ideaObject.id, newQuality);
+  newIdea.updateQuality();
+}
+
+
+
+
+
+
+
+
+
+
+
+

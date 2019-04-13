@@ -1,9 +1,9 @@
 class Idea {u
-  constructor(title, body, id) {
+  constructor(title, body, id, quality) {
     this.title = title;
     this.body = body;
     this.id = id || Date.now();
-    // this.quality = quality || 'Swill';
+    this.quality = quality || 'Swill';
   }
 
   saveToStorage(heels) {
@@ -28,7 +28,8 @@ class Idea {u
   }
 
   updateQuality() {
-
+    var stringThing = JSON.stringify(this);
+    localStorage.setItem(this.id, stringThing);
   }
 
 }
