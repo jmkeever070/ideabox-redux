@@ -62,12 +62,22 @@
   font-weight: 500;
 }
 
+.qual-fil {
+  display: flex;
+  flex-direction: column;
+}
+
 .qual-headings {
   color: #ffffff;
   font-weight: 100;
   font-size: 15px;
   margin-bottom: 10px;
   height: 30px;
+  background: #1F1E3D;;
+  display: flex;
+  padding-right: 10px;
+  padding-left: 5px;
+  border: none;
 }
 
 .fil-heading {

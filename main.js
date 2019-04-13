@@ -9,6 +9,7 @@ var cardBookmark = document.querySelector('.card-area');
 var myEnter = document.querySelector('.editable');
 var searchBox = document.querySelector('.search-input');
 var searchBtn = document.querySelector('.fa-search');
+var qualSearch = document.querySelector('.qual-fil-search');
 
 
 for (var i = 0; i < localStorage.length; i++) {
@@ -73,6 +74,12 @@ cardBookmark.addEventListener('click', function(e) {
 searchBox.addEventListener('keyup', filterText);
 
 searchBtn.addEventListener('click', filterText)
+
+qualSearch.addEventListener('click', function (e) {
+  if (e.target.className.includes('button-corral')) {
+    qualityFilter(e);
+  }
+});
 
 // *******Functions****************
 
@@ -143,7 +150,7 @@ function activateStar(e) {
     if (e.target.classList.contains('star')) {
         star.remove();
         newStar.style.display = 'block';
-  } 
+  }
 };
 
 function returnKey(e) {
@@ -250,6 +257,44 @@ function removeCards() {
   cardBookmark.innerHTML = '';
 }
 
+function qualityFilter(e) {
+  // debugger;
+  removeCards();
+  var swillQ = document.querySelector('#swill-btn');
+  var plausQ = document.querySelector('#plaus-btn');
+  var genQ = document.querySelector('#gen-btn');
+  
+  var findId = e.target.dataset.editquality;
+  var idea = localStorage.getItem(findId);
+  var ideaObject = JSON.parse(idea);
+
+  if (swillQ === e.target) {
+    var swillSearch = ideasArray.filter(function (x) {
+      return x.quality === 'Swill';
+    })
+    swillSearch.forEach(function(y) {
+      makeCard(y);
+    })
+  };
+
+  if (plausQ === e.target) {
+    var plausSearch = ideasArray.filter(function(x) {
+      return x.quality === 'Plausible';
+    })
+    plausSearch.forEach(function(y) {
+      makeCard(y);
+    })
+  };
+
+  if (genQ === e.target) {
+    var genSearch = ideasArray.filter(function(x) {
+      return x.quality === 'Genius';
+    })
+    genSearch.forEach(function(y) {
+      makeCard(y);
+    })
+  }
+};
 
 
 
