@@ -7,6 +7,8 @@ var ideasArray = [];
 var numCards = 0;
 var cardBookmark = document.querySelector('.card-area');
 var myEnter = document.querySelector('.editable');
+var searchBox = document.querySelector('.search-input');
+var searchBtn = document.querySelector('.fa-search');
 
 
 for (var i = 0; i < localStorage.length; i++) {
@@ -15,8 +17,6 @@ for (var i = 0; i < localStorage.length; i++) {
   var parsedIdea = JSON.parse(value);
   ideasArray.push(parsedIdea);
 }
-
-
 
 
 // *******Event Listeners**********
@@ -70,6 +70,9 @@ cardBookmark.addEventListener('click', function(e) {
   }
 })
 
+searchBox.addEventListener('keyup', filterText);
+
+searchBtn.addEventListener('click', filterText)
 
 // *******Functions****************
 
@@ -142,7 +145,6 @@ function activateStar(e) {
         newStar.style.display = 'block';
   } 
 };
-
 
 function returnKey(e) {
   if (e.keyCode === 13 && e.target.className.includes('card-title')){
@@ -228,6 +230,24 @@ function voteDown(e) {
 
   var newIdea = new Idea (ideaObject.title, ideaObject.body, ideaObject.id, newQuality);
   newIdea.updateQuality();
+}
+
+// *************Filtering Functions*************
+
+function filterText() {
+  removeCards();
+  var searchText = searchBox.value;
+  var textSearch = ideasArray.filter(function (x) {
+    return x.title.toLowerCase().includes(searchText) || x.body.toLowerCase().includes(searchText);
+  }) 
+
+  textSearch.forEach(function (y) {
+    makeCard(y);
+  })
+}
+
+function removeCards() {
+  cardBookmark.innerHTML = '';
 }
 
 
