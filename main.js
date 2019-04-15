@@ -10,15 +10,16 @@ var myEnter = document.querySelector('.editable');
 var searchBox = document.querySelector('.search-input');
 var searchBtn = document.querySelector('.fa-search');
 var qualSearch = document.querySelector('.qual-fil-search');
+// var showStarred = document.querySelector('.show-starred');
+var showBtn = document.querySelector('.show-btn');
 
-
+// debugger;
 for (var i = 0; i < localStorage.length; i++) {
   var key = localStorage.key(i);
   var value = localStorage[key];
   var parsedIdea = JSON.parse(value);
   ideasArray.push(parsedIdea);
-}
-
+};
 
 // *******Event Listeners**********
 window.addEventListener('load', windowLoad(ideasArray));
@@ -81,11 +82,15 @@ qualSearch.addEventListener('click', function (e) {
   }
 });
 
+showBtn.addEventListener('click', moreAndLess);
+
+// showStarred.addEventListener('click', starFilter);
+
 // *******Functions****************
 
 function windowLoad(storageArray) {
   storageArray.forEach(function(x) {
-    var idea = new Idea(x.title, x.body, x.id, x.quality);
+    var idea = new Idea(x.title, x.body, x.id, x.quality, x.starred);
     makeCard(idea);
   })
 }
@@ -107,7 +112,7 @@ function makeCard(idea) {
   numCards++;
   var card = 
 
-`<article class="idea-card" id="card${idea.id}">
+` <article class="idea-card" id="card${idea.id}">
         <div class="card-header">
           <input type="image" class="btns star" data-removestar=${idea.id} id="normal-star${idea.id}" src="assets/star.svg">
           <input type="image" class="btns red-star" data-addstar=${idea.id} id="active-star${idea.id}" style="display:none" src="assets/star-active.svg">
@@ -134,7 +139,7 @@ function deleteCard(e) {
 
   var idea = localStorage.getItem(findId);
   var ideaObject = JSON.parse(idea);
-  var newIdea = new Idea(ideaObject.title, ideaObject.body, ideaObject.id, ideaObject.quality);
+  var newIdea = new Idea(ideaObject.title, ideaObject.body, ideaObject.id, ideaObject.quality, ideaObject.starred);
 
   newIdea.deleteFromStorage();
 
@@ -143,13 +148,22 @@ function deleteCard(e) {
 // *************Update Content Functions************
 
 function activateStar(e) {
+  // debugger;
   var findId = e.target.dataset.removestar;
   var star = document.querySelector(`#normal-star${findId}`)
   var newStar = document.querySelector(`#active-star${findId}`);
 
-    if (e.target.classList.contains('star')) {
+  var idea = localStorage.getItem(findId);
+  var ideaObject = JSON.parse(idea);
+
+  if (e.target.classList.contains('star')) {
         star.remove();
         newStar.style.display = 'block';
+        ideaObject.starred = true;
+  var newIdea = new Idea (ideaObject.title, ideaObject.body, ideaObject.id, ideaObject.quality, ideaObject.starred)
+  console.log(newIdea);
+      newIdea.saveToStorage();
+
   }
 };
 
@@ -160,7 +174,6 @@ function returnKey(e) {
   
   if (e.keyCode === 13 && e.target.className.includes('card-body')) {
     updateBodyContent(e);
-
   }
 };
 
@@ -171,7 +184,7 @@ function updateTitleContent(e){
 
   var idea = localStorage.getItem(findId);
   var ideaObject = JSON.parse(idea);
-  var newIdea = new Idea(newTitle, ideaObject.body, ideaObject.id, ideaObject.quality);
+  var newIdea = new Idea(newTitle, ideaObject.body, ideaObject.id, ideaObject.quality, ideaObject.starred);
 
 
   if (e.target.classList.contains('editable')) {
@@ -187,7 +200,7 @@ function updateBodyContent(e) {
 
   var idea = localStorage.getItem(findId);
   var ideaObject = JSON.parse(idea);
-  var newIdea = new Idea(ideaObject.title, newBody, ideaObject.id, ideaObject.quality);
+  var newIdea = new Idea(ideaObject.title, newBody, ideaObject.id, ideaObject.quality, ideaObject.starred);
 
   if (e.target.classList.contains('editable')) {
     e.target.contentEditable = true;
@@ -214,7 +227,7 @@ function voteUp(e) {
           newQual.innerText = 'Genius';
     }
 
-  var newIdea = new Idea(ideaObject.title, ideaObject.body, ideaObject.id, newQuality);
+  var newIdea = new Idea(ideaObject.title, ideaObject.body, ideaObject.id, newQuality, ideaObject.starred);
   newIdea.updateQuality();
 }
 
@@ -235,7 +248,7 @@ function voteDown(e) {
           newQual.innerText = 'Swill'
     }
 
-  var newIdea = new Idea (ideaObject.title, ideaObject.body, ideaObject.id, newQuality);
+  var newIdea = new Idea (ideaObject.title, ideaObject.body, ideaObject.id, newQuality, ideaObject.starred);
   newIdea.updateQuality();
 }
 
@@ -263,10 +276,6 @@ function qualityFilter(e) {
   var swillQ = document.querySelector('#swill-btn');
   var plausQ = document.querySelector('#plaus-btn');
   var genQ = document.querySelector('#gen-btn');
-  
-  var findId = e.target.dataset.editquality;
-  var idea = localStorage.getItem(findId);
-  var ideaObject = JSON.parse(idea);
 
   if (swillQ === e.target) {
     var swillSearch = ideasArray.filter(function (x) {
@@ -296,7 +305,32 @@ function qualityFilter(e) {
   }
 };
 
+// function starFilter(e) {
+  // *******NOT SURE HOW TO GO ABOUT HANDLING THE STAR********
+// }
 
+
+function moreAndLess(e) {
+  e.preventDefault();
+  // debugger;
+
+  if (showBtn.value === 'Show-More') {
+      showBtn.value = 'Show-Less';
+      cardBookmark.innerHTML = '';
+
+      ideasArray.forEach(function (x) {
+        makeCard(x);
+      })
+  } else if (showBtn.value === 'Show-Less') {
+              showBtn.value = 'Show-More';
+              cardBookmark.innerHTML = '';
+
+              var mostRecentIdeas = ideasArray.slice(-10);
+              mostRecentIdeas.forEach(function(y) {
+                makeCard(y);
+              })
+  }
+};
 
 
 

@@ -108,7 +108,19 @@
   font-weight: 500;
 }
 
-
+.show-btn {
+  background: #5356A4;
+  color: #E9E9F3;
+  border-color: #353567;
+  margin-bottom: 15px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  width: 91%;
+  height: 31px;
+  font-weight: 500;
+  margin-top: 10px;
+}
 
 
 
