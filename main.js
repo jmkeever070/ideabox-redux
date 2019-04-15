@@ -12,6 +12,7 @@ var searchBtn = document.querySelector('.fa-search');
 var qualSearch = document.querySelector('.qual-fil-search');
 // var showStarred = document.querySelector('.show-starred');
 var showBtn = document.querySelector('.show-btn');
+var dropMenu = document.querySelector('.dropbtn');
 
 // debugger;
 for (var i = 0; i < localStorage.length; i++) {
@@ -83,6 +84,8 @@ qualSearch.addEventListener('click', function (e) {
 });
 
 showBtn.addEventListener('click', moreAndLess);
+
+dropMenu.addEventListener('click', menu);
 
 // showStarred.addEventListener('click', starFilter);
 
@@ -331,6 +334,10 @@ function moreAndLess(e) {
               })
   }
 };
+
+function menu() {
+  debugger;
+}
 
 
 
