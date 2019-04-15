@@ -223,6 +223,10 @@ label {
   display: none;
 }
 
+.star-2 {
+  display: none;
+}
+
 .card-main {
   height: 80%;
 }
@@ -278,11 +282,16 @@ label {
     display:block;
   }
 
+  .dropdown {
+    display: flex;
+    justify-content: center;
+  }
+
   .dropbtn {
     position: relative;
     display: flex;
     justify-content: flex-start;
-    width: 30%;
+    width: 49%;
   }
 
   .filter-star {
