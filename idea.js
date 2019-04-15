@@ -1,9 +1,10 @@
 class Idea {u
-  constructor(title, body, id, quality) {
+  constructor(title, body, id, quality, starred) {
     this.title = title;
     this.body = body;
     this.id = id || Date.now();
     this.quality = quality || 'Swill';
+    this.starred = starred;
   }
 
   saveToStorage(heels) {
