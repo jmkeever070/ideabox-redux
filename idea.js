@@ -1,4 +1,4 @@
-class Idea {u
+class Idea {
   constructor(title, body, id, quality, starred) {
     this.title = title;
     this.body = body;

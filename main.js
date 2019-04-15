@@ -10,11 +10,11 @@ var myEnter = document.querySelector('.editable');
 var searchBox = document.querySelector('.search-input');
 var searchBtn = document.querySelector('.fa-search');
 var qualSearch = document.querySelector('.qual-fil-search');
-// var showStarred = document.querySelector('.show-starred');
+var showStarred = document.querySelector('.show-starred');
+
 var showBtn = document.querySelector('.show-btn');
 var dropMenu = document.querySelector('.dropbtn');
 
-// debugger;
 for (var i = 0; i < localStorage.length; i++) {
   var key = localStorage.key(i);
   var value = localStorage[key];
@@ -23,6 +23,8 @@ for (var i = 0; i < localStorage.length; i++) {
 };
 
 // *******Event Listeners**********
+
+
 window.addEventListener('load', windowLoad(ideasArray));
 
 saveBtn.addEventListener('click', function(e) {
@@ -38,6 +40,12 @@ saveBtn.addEventListener('click', function(e) {
 cardBookmark.addEventListener('click', function(e) {
   if (e.target.className.includes('star')) {
     activateStar(e);
+  }
+})
+
+cardBookmark.addEventListener('click', function(e) {
+  if (e.target.className.includes('red-star')) {
+    deactivateStar(e);
   }
 })
 
@@ -87,7 +95,7 @@ showBtn.addEventListener('click', moreAndLess);
 
 dropMenu.addEventListener('click', menu);
 
-// showStarred.addEventListener('click', starFilter);
+showStarred.addEventListener('click', starFilter);
 
 // *******Functions****************
 
@@ -118,6 +126,7 @@ function makeCard(idea) {
 ` <article class="idea-card" id="card${idea.id}">
         <div class="card-header">
           <input type="image" class="btns star" data-removestar=${idea.id} id="normal-star${idea.id}" src="assets/star.svg">
+          <input type="image" class="btns star-2" data-replacestar=${idea.id} id="normal-star2${idea.id}" src="assets/star.svg">
           <input type="image" class="btns red-star" data-addstar=${idea.id} id="active-star${idea.id}" style="display:none" src="assets/star-active.svg">
           <input type="image" data-deleteid=${idea.id} class=" delete-btn btns" src="assets/delete.svg">
         </div>
@@ -151,7 +160,6 @@ function deleteCard(e) {
 // *************Update Content Functions************
 
 function activateStar(e) {
-  // debugger;
   var findId = e.target.dataset.removestar;
   var star = document.querySelector(`#normal-star${findId}`)
   var newStar = document.querySelector(`#active-star${findId}`);
@@ -160,15 +168,34 @@ function activateStar(e) {
   var ideaObject = JSON.parse(idea);
 
   if (e.target.classList.contains('star')) {
+        // star.remove();
         star.remove();
         newStar.style.display = 'block';
         ideaObject.starred = true;
   var newIdea = new Idea (ideaObject.title, ideaObject.body, ideaObject.id, ideaObject.quality, ideaObject.starred)
   console.log(newIdea);
       newIdea.saveToStorage();
-
   }
 };
+
+function deactivateStar(e) {
+  var findId = e.target.dataset.addstar;
+  var star2 = document.querySelector(`#normal-star2${findId}`);
+  var newStar = document.querySelector(`#active-star${findId}`);
+
+  var idea = localStorage.getItem(findId);
+  var ideaObject = JSON.parse(idea);
+  
+  if (e.target.classList.contains('red-star')) {
+        newStar.remove();
+        star2.style.display = 'block';
+
+        ideaObject.starred = false;
+    var newIdea = new Idea (ideaObject.title, ideaObject.body, ideaObject.id, ideaObject.quality, ideaObject.starred);
+    newIdea.saveToStorage();
+  }
+}
+
 
 function returnKey(e) {
   if (e.keyCode === 13 && e.target.className.includes('card-title')){
@@ -308,9 +335,24 @@ function qualityFilter(e) {
   }
 };
 
-// function starFilter(e) {
-  // *******NOT SURE HOW TO GO ABOUT HANDLING THE STAR********
-// }
+function starFilter(e) {
+  cardBookmark.innerHTML = '';
+
+
+  var starFil = ideasArray.filter(function (x) {
+    return x.starred === true;
+  })
+
+  var newStarCard = starFil.forEach(function (y) {
+    makeCard(y);
+  })
+
+  // var newIdea = new Idea (ideaObject.title, ideaObject.body, ideaObject.id, ideaObject.quality, starFil);
+
+  // newIdea.updateQuality
+
+
+}
 
 
 function moreAndLess(e) {
