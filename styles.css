@@ -36,6 +36,14 @@
   margin-bottom: 10px;
 }
 
+.dropbtn {
+  display: none;
+}
+
+.close-drop {
+  display: none;
+}
+
 .cat-headings {
   color: #bfbfdd;
   font-weight: 400;
@@ -247,5 +255,66 @@ label {
 .btns {
   width: 30px;
   
+}
+
+@media screen and (max-width: 850px) {
+  .idea-card {
+    width: 46%;
+    border: 2px solid black;
+    margin: 10px;
+  }
+}
+
+@media screen and (max-width: 691px) {
+  .idea-card {
+    width: 89%;
+    border: 2px solid black;
+    margin: 10px;
+  }
+}
+
+@media screen and (max-width: 589px) {
+  .container {
+    display:block;
+  }
+
+  .dropbtn {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    width: 30%;
+  }
+
+  .filter-star {
+    display:none;
+  }
+
+  .quality-fil {
+    display: none;
+  }
+
+  .qual-form {
+    display: none;
+  }
+
+  .show-btn {
+    display: none;
+  }
+
+  .upper-main {
+    grid-area: upper-main;
+    background: #A8AAD1;
+    display: flex;
+    font-family: 'Open Sans', sans-serif;
+    padding-left: 10px;
+    justify-content: flex-start;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+  }
+
 }
 
